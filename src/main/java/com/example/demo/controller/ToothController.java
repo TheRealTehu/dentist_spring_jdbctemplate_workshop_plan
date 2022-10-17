@@ -37,6 +37,11 @@ public class ToothController {
         service.addTooth(tooth);
     }
 
+    @PostMapping("/return")
+    public Tooth addToothAndReturnNewTooth(@RequestBody Tooth tooth){
+        return service.addToothAndReturnNewTooth(tooth);
+    }
+
     @PutMapping("/{id}")
     public void updateTooth(@PathVariable("id") long id, @RequestBody Tooth tooth){
         service.updateTooth(id, tooth);

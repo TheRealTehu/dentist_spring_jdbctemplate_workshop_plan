@@ -5,10 +5,17 @@ import com.example.demo.model.Tooth;
 import java.util.List;
 
 public interface ToothDao {
-    public List<Tooth> getAllTeeth();
-    public Tooth getToothById(long id);
-    public List<Tooth> getAllTeethForPatientById(long patientId);
-    public void addTooth(Tooth tooth);
-    public void updateTooth(long id, Tooth tooth); // lehetne DTO
-    public void deleteTooth(long id);
+    List<Tooth> getAllTeeth();
+
+    Tooth getToothById(long id);
+
+    List<Tooth> getAllTeethForPatientById(long patientId);
+
+    void addTooth(Tooth tooth);
+
+    Tooth addToothAndReturnNewTooth(Tooth tooth);
+
+    void updateTooth(long id, Tooth tooth); // lehetne DTO
+
+    void deleteTooth(long id);
 }

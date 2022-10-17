@@ -32,6 +32,10 @@ public class ToothService {
         repository.addTooth(tooth);
     }
 
+    public Tooth addToothAndReturnNewTooth(Tooth tooth){
+        return repository.addToothAndReturnNewTooth(tooth);
+    }
+
     public void updateTooth(long id, Tooth tooth) {
         repository.updateTooth(id, tooth);
     }
