@@ -50,9 +50,10 @@ public class PatientDaoJdbcImpl implements PatientDao {
 
                         actualPatient = getPatientFromResultSet(rs);
 
-                        Tooth tooth = getToothFromResultSet(rs);
-
-                        actualPatient.addTooth(tooth);
+                        if(rs.getString("teeth.tooth_type") != null){
+                            Tooth tooth = getToothFromResultSet(rs);
+                            actualPatient.addTooth(tooth);
+                        }
                     }
                 }
                 patientList.add(actualPatient);
@@ -63,8 +64,7 @@ public class PatientDaoJdbcImpl implements PatientDao {
     }
 
     private Patient getPatientFromResultSet(ResultSet rs) throws SQLException {
-        Patient actualPatient;
-        actualPatient = new Patient();
+        Patient actualPatient = new Patient();
         actualPatient.setId(rs.getLong("patients.id"));
         actualPatient.setName(rs.getString("patients.name"));
         actualPatient.setGender(Gender.valueOf(rs.getString("patients.gender")));
@@ -90,14 +90,14 @@ public class PatientDaoJdbcImpl implements PatientDao {
     @Override
     public void addPatient(Patient patient) {
         final String SQL = "INSERT INTO patients(name, gender, age) VALUES(?,?,?);";
-        Object[] args = new Object[]{patient.getName(), patient.getGender(), patient.getAge()};
+        Object[] args = new Object[]{patient.getName(), patient.getGender().toString(), patient.getAge()};
         template.update(SQL, args);
     }
 
     @Override
     public void updatePatient(long id, Patient patient) {
-        final String SQL = "UPDATE patients SET name = ?, gender = ?, age = ?;";
-        Object[] args = new Object[]{patient.getName(), patient.getGender(), patient.getAge()};
+        final String SQL = "UPDATE patients SET name = ?, gender = ?, age = ? WHERE id = ?;";
+        Object[] args = new Object[]{patient.getName(), patient.getGender().toString(), patient.getAge(), id};
         template.update(SQL, args);
     }
 
